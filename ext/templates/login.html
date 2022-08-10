@@ -1,0 +1,89 @@
+
+<!-- Preloader -->
+
+<!-- ##### Contact Form Area Start ##### -->
+<div class="contact-area section-padding-0-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h2>Login</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-area">
+                    <form action="{{ url_for('index')}}" method="POST">
+                        <div class="row">
+                            <div class="col-12 col-lg-12">
+                            <label id="lblemail" for="email"><b>Email</b></label>
+                                <input type="text" id="email" class="form-control" name="email" placeholder="Entre com o email cadastrado">
+                            </div>
+                                <div class="col-12 col-lg-12">
+                                <label id="lblsenha" for="senha"><b>Senha</b></label>
+                                <input id="senha" type="password" class="form-control" name="senha" placeholder="Digite aqui sua senha">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn btn-success" id="entrar" onclick="entrar()" type="button">Acessar sua conta</button>
+                                <button type="button" class="btn btn-primary" id="cadatrar" onclick="exibirCriarConta()">Ainda não tem conta? Clique aqui</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+   .container {
+       font-family: sans-serif;
+       margin-left: 7%;
+       margin-right: 7%;
+       margin-top: 7%;
+       margin-bottom: 7%;
+       align-items: center;
+       background: #EEE;
+
+   }
+   .section-heading {
+        align-items: center;
+        margin-left: 45%;
+
+   }
+   input{
+       border-radius: 5px;
+   }
+   #email{
+    margin-bottom: 5px;
+   }
+   #senha{
+       margin-bottom: 15px;
+   }
+   #lblemail{
+    margin-left: 654px;
+   }
+   #lblsenha{
+    margin-left: 651px;
+   }
+
+   #entrar {
+    margin-left: 650px;
+   }
+
+   #cadastrar{
+       margin-left: 15px;
+   }
+</style>
+<script>
+    function entrar()
+    {
+    }
+    function exibirCriarConta()
+    {
+}
+</script>
