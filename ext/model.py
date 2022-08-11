@@ -15,6 +15,9 @@ class Usuario(db.Model, UserMixin):
     fone = db.Column(db.String(length=50), nullable=False)
     email = db.Column(db.String(length=255), nullable=False, unique=True, index=True)
     senha = db.Column(db.String(length=200), nullable=False)
+    in_ativo = db.Column(db.Boolean)
+    in_colaborador = db.Column(db.Boolean)
+    in_admin = db.Column(db.Boolean)
 
     def __str__(self):
         return self.name
