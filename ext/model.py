@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from ext import db
+from flask_login import UserMixin
 
 
-class Usuario(db.Model):
+class Usuario(db.Model, UserMixin):
     __tablename__ = "USUARIOS"
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(length=255), nullable=False)

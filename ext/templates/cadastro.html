@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/styles.css" rel="stylesheet" />
+    <title>Espaço paula barros</title>
+</head>
+<body>
+    <form action="{{ url_for ('cadastrar')}}", method="POST">
+        <div class="form-group"'>
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" name="nome" aria-describedby="nomeHelp" placeholder="Digite seu Nome">
+        </div>
+        <div class="form-group"'>
+          <label for="rua">Rua</label>
+          <input type="text" class="form-control" name="rua" aria-describedby="nomeHelp" placeholder="Digite sua Rua">
+        </div>
+        <div class="form-group"'>
+          <label for="numero">Numero</label>
+          <input type="text" class="form-control" name="numero" aria-describedby="nomeHelp" placeholder="Digite seu Numero">
+        </div>
+        <div class="form-group"'>
+          <label for="bairro">Bairro</label>
+          <input type="text" class="form-control" name="bairro" aria-describedby="nomeHelp" placeholder="Digite seu Bairro">
+        </div>
+        <div class="form-group"'>
+          <label for="cidade">Cidade</label>
+          <input type="text" class="form-control" name="cidade" aria-describedby="nomeHelp" placeholder="Digite sua Cidade">
+        </div>
+        <div class="form-group"'>
+          <label for="estado">Estado</label>
+          <input type="text" class="form-control" name="estado" aria-describedby="nomeHelp" placeholder="Digite seu Estado">
+        </div>
+        <div class="form-group"'>
+          <label for="fone">Telefone</label>
+          <input type="text" class="form-control" name="fone" aria-describedby="nomeHelp" placeholder="Digite seu Telefone">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Endereço de email</label>
+          <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Seu email">
+          <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Senha</label>
+          <input type="password" class="form-control" name="senha" placeholder="Senha">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+</body>
+</html>

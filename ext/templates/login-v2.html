@@ -17,12 +17,20 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
   <div class="card card-outline card-primary">
     <div class="card-body">
       <p class="login-box-msg">Faça o login para iniciar a sessão</p>
 
-      <!-- <form action="{{url_for('login')}}" method="post"> -->
-      <form action="" method="post">
+      <form action="{{url_for('login')}}" method="post">
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -40,11 +48,8 @@
         </div>
       </form>
       <p class="mb-0">
-        <a href="" class="text-center">Registrar agora</a>
-      </p>
-      <!-- <p class="mb-0">
         <a href="{{ url_for('cadastrar')}}" class="text-center">Registrar agora</a>
-      </p> -->
+      </p>
     </div>
     <!-- /.card-body -->
   </div>
