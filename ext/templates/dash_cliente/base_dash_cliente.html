@@ -42,8 +42,26 @@
     {%include 'dash_cliente/content_header_cliente.html'%}
     <!-- /.content-header -->
 
-    <!-- Main content -->
-    {%include 'dash_cliente/content_cliente.html'%}
+    <div class="content-wrapper">
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            {%block content%}
+            {%endblock%}
+          </div>
+          <!-- /.row -->
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+   
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
   <!-- /.content-wrapper -->
   {%include 'dash_cliente/footer_cliente.html'%}
 
