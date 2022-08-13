@@ -1,0 +1,77 @@
+{% extends "dash_cliente/base_dash_cliente.html" %}
+{% block body %}
+      <!-- left column -->
+      <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Agendamentos</h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form action="" method="POST">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <label for="exampleInputEmail1">Nome</label>
+                  <input type="text" class="form-control" id="name" placeholder="Nome" name="nome">
+                </div>
+                <div class="col-6">
+                  <label for="exampleInputEmail1">Sobrenome</label>
+                  <input type="text" class="form-control" id="lastname" placeholder="Sobrenome" name="sobrenome">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-6">
+                  <label for="exampleInputEmail1">Email</label>
+                  <input type="email" class="form-control" id="lastname" placeholder="email" name="email">
+                </div>
+              </div>
+            <div class="form-group">
+              <label>Telefone: </label>
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                </div>
+                <input type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask name="telefone">
+              </div>
+            </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-6">
+                    <label>Data de agendamento:</label>
+                    <div class="input-group">
+                      <input type="date" class="form-control float-right" id="reservationtime" name="dt_agendamento">
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label>Horario </label>
+                    <div class="input-group-prepend">
+                      <input type="time" class="form-control float-right" id="reservationtime" name="hr_agendamento">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Cabeleleiro</label>
+                  <select class="form-control select2" style="width: 100%; " name="cabeleleiro">
+                    <option selected="selected">Paula barros</option>
+                    <option>Jocasta Sousa</option>
+                    <option>Daiane Oliveira</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+{% endblock body %}
