@@ -1,0 +1,99 @@
+{% extends "dash_colaborador/base_dash_colaborador.html" %}
+{% block content %}
+      <!-- left column -->
+      <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="card card-primary">
+        {% for x in agendamento %}
+          <div class="card-header">
+            <h3 class="card-title">Agendamentos</h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form action="" method="POST">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <label for="exampleInputEmail1">Nome</label>
+                  <input value="{{x.nome}}" type="text" class="form-control" id="name" placeholder="Nome" name="nome">
+                </div>
+                <div class="col-6">
+                  <label for="exampleInputEmail1">Sobrenome</label>
+                  <input type="text" class="form-control" id="lastname" placeholder="Sobrenome" name="sobrenome">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-6">
+                  <label for="exampleInputEmail1">Email</label>
+                  <input value="{{x.email}}" type="email" class="form-control" id="lastname" placeholder="email" name="email">
+                </div>
+              </div>
+            <div class="form-group">
+              <label>Telefone: </label>
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                </div>
+                <input value="{{x.fone}}" type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask name="telefone">
+              </div>
+            </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-6">
+                    <label>Data de agendamento:</label>
+                    <div class="input-group">
+                      <input value="{{x.data_agendamento}}" type="date" class="form-control float-right" id="reservationtime" name="dt_agendamento">
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label>Horario </label>
+                    <div class="input-group-prepend">
+                      <input value="{{x.horario_agendamento}}" type="time" class="form-control float-right" id="reservationtime" name="hr_agendamento">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Cabeleleiro</label>
+                  <select value="{{x.colaborador}}" class="form-control select2" style="width: 100%; " name="cabeleleiro">
+                    <option selected="selected">Paula barros</option>
+                    <option>Jocasta Sousa</option>
+                    <option>Daiane Oliveira</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group clearfix">
+                {%if x.in_confirmar == 0 or x.in_confirmar%}
+                <div class="icheck-primary d-inline">
+                  <input type="checkbox" id="checkboxPrimary1" name="confirmado">
+                  <label for="checkboxPrimary1">
+                    Agendamento Confirmado
+                  </label>
+                </div>
+                {%else%}
+                <div class="icheck-primary d-inline">
+                  <input type="checkbox" id="checkboxPrimary1" name="confirmado" checked>
+                  <label for="checkboxPrimary1">
+                    Agendamento Confirmado
+                  </label>
+                </div>
+                {%endif%}
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="card-footer">
+              <a type="button" href="{{url_for('agendamento_finalizado', id=x.id)}}" class="btn btn-block btn-outline-success">Realizado</a>
+            </div>
+          </form>
+        </div>
+        {%endfor%}
+{% endblock %}

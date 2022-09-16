@@ -36,9 +36,28 @@
   <!-- Main Sidebar Container -->
   
   {%include 'dash_colaborador/side_colaborador.html'%}
-  
-  {%include 'dash_colaborador/content_colaborador.html'%}
   {%include 'dash_colaborador/content_header_colaborador.html'%}
+  
+  <div class="content-wrapper">
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          {%block content%}
+          {%endblock%}
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-7 connectedSortable">
+ 
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
   
   <!-- Content Wrapper. Contains page content -->
   
