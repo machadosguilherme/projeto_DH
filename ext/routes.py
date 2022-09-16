@@ -60,7 +60,7 @@ def init_app(app):
             user.email = request.form['email']
             user.senha = generate_password_hash(request.form['senha'])
             user.in_admin = 0
-            user.in_colaborador = 0
+            user.in_colaborador = 1
             user.in_ativo = 1
             
             db.session.add(user)
@@ -76,7 +76,8 @@ def init_app(app):
         usuario = Usuario.query.filter_by(id = id).first()
         agendamentos = Agendamento.query.filter_by(id = id).count()
         if usuario.in_colaborador == 0:
-            return render_template('dash_cliente/dashboard_cliente.html', usuario=usuario.nome)
+            agendamentos =  Agendamento.query.filter_by(id_usuario = id).count()
+            return render_template('dash_cliente/dashboard_cliente.html', usuario=usuario.nome, agendamentos=agendamentos)
         else:
             return BAD_REQUEST
         
@@ -85,9 +86,12 @@ def init_app(app):
     @login_required
     def dash_colaborador(id):
         usuario = Usuario.query.filter_by(id = id).first()
+        agendamentos = Agendamento.query.filter_by().count()
         if usuario.in_colaborador == 1:
             agendamentos =  Agendamento.query.count()
-            return render_template('dash_colaborador/dashboard_colaborador.html', agendamentos=agendamentos)
+            agendamento_realizado = Agendamento.query.filter_by(in_realizado=1, id_usuario_finalizacao=id).count()
+            porcentagem = (agendamento_realizado * 100) / agendamentos
+            return render_template('dash_colaborador/dashboard_colaborador.html', agendamentos=agendamentos, porcentagem=porcentagem)
         else:
             return BAD_REQUEST
     
@@ -97,10 +101,14 @@ def init_app(app):
         usuario = Usuario.query.filter_by(id = id).first()
         agendamentos = Agendamento.query.filter_by().count()
         novos_usuarios = Usuario.query.filter_by().count()
+        agendamento_realizado = Agendamento.query.filter_by(in_realizado=1, id_usuario_finalizacao=id).count()
+        porcentagem = (agendamento_realizado * 100) / agendamentos
+        print(f'teste: {porcentagem}')
         if usuario.in_admin == 1:
             return render_template('dash_admin/dashboard_admin.html',
                            novos_usuarios=novos_usuarios,
-                           agendamentos=agendamentos)
+                           agendamentos=agendamentos,
+                           porcentagem=porcentagem)
         else:
             return BAD_REQUEST
  
@@ -161,8 +169,10 @@ def init_app(app):
     @app.route('/agendamento_finalizado/<id>', methods=['GET'])
     @login_required
     def agendamento_finalizado(id):
+        usuario = session['usuario']
         agendamento = Agendamento.query.filter_by(id=id).first()
         agendamento.in_realizado = 1
+        agendamento.id_usuario_finalizacao = usuario
          
         db.session.add(agendamento)
         db.session.commit()

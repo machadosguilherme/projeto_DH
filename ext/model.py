@@ -35,6 +35,7 @@ class Agendamento(db.Model):
     data_registro = db.Column(db.DateTime, nullable=False)
     in_confimado = db.Column(db.Boolean)
     in_realizado =db.Column(db.Boolean)
+    id_usuario_finalizacao = db.Column(db.Integer, db.ForeignKey('USUARIOS.id'))
 
     def __str__(self):
         return self.name
