@@ -34,7 +34,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link active">
+                <a href="{{url_for('dash_admin', id=session['usuario'])}}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
@@ -51,9 +51,59 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{url_for('lista_agendamentos')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ver Agendamentos</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Produtos
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url_for('criar_produto')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Criar produtos</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url_for('lista_produtos')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>listar produtos</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-columns"></i>
+              <p>
+                Tratamentos
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url_for('criar_tratamento')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Criar Tratamento</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url_for('lista_tratamentos')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listar Tratamentos</p>
                 </a>
               </li>
             </ul>
@@ -68,7 +118,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{url_for('lista_usuarios')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Usuarios</p>
                 </a>
@@ -76,7 +126,7 @@
             </ul>
           </li> 
           <!-- <li class="nav-header">EXAMPLES</li> -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
@@ -84,7 +134,7 @@
                 <span class="badge badge-info right">2</span>
               </p>
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

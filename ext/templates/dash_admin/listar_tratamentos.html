@@ -1,0 +1,92 @@
+{%extends 'dash_admin/base_dash_admin.html'%}
+{%block content%}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Tratamentos Cadastrados</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Tipo</th>
+                                        <th>Valor do Tratamento</th>
+                                        <th>Porcentagem sob o produto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for x in tratamentos %}
+                                <tr>
+                                    <td>{{x.id}}</td>
+                                    <td>{{x.nome}}</td>
+                                    <td>{{x.tipo}}</td>
+                                    <td>{{x.valor}}</td>
+                                    <td>{{x.porcentagem}}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+</section>
+<!-- <div class="card-body table-responsive p-0">
+    <table class="table table-hover text-nowrap">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Telefone</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for x in usuarios %}
+        <tr>
+          <td>{{x.id}}</td>
+          <td>{{x.nome}}</td>
+          <td>{{x.email}}</td>
+          <td>{{x.fone}}</td>
+            {% if x.in_colaborador == 1 %}
+            <td></td>#TODO
+            {%else%}
+            <td></td>
+            {%endif%}
+
+            {% if x.in_admin == 1 %}
+            <td></td>#TODO
+            {%else%}
+            <td></td>
+            {%endif%}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div> -->
+<script>
+$(function () {
+    $("#example1").DataTable({
+    "responsive": true, "lengthChange": false, "autoWidth": false,
+    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": false,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "responsive": true,
+    });
+});
+</script>
+{%endblock%}

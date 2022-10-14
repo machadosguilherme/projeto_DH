@@ -1,0 +1,48 @@
+{% extends "dash_admin/base_dash_admin.html" %}
+{% block content %}
+
+<div class="col-md-6">
+    <!-- general form elements -->
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Cadastrar Tratamentos</h3>
+      </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form action="" method="POST">
+          <div class="card-body">
+              <div class="col-10">
+                <label for="exampleInputEmail1">Nome</label>
+                <input type="text" class="form-control" id="name" placeholder="Nome" name="nome">
+            </div>
+
+            <div class="col-10">
+                <label for="exampleInputEmail1">Tipo do Tratamento</label>
+                <input type="text" class="form-control" id="tipo" placeholder="" name="tipo">
+            </div>
+            <div class="col-10">
+                <label for="exampleInputEmail1">Valor do Tratamento</label>
+                <input type="Number" class="form-control" id="valor" placeholder="" name="valor">
+            </div>
+            <div class="col-10">
+                <label for="exampleInputEmail1">Porcentagem sob Tratamento</label>
+                <input type="Number" class="form-control" id="porcentagem" placeholder="" name="porcentagem">
+            </div>
+        </div>
+        <!-- /.card-body -->
+        
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+</div>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endwith %}
+{% endblock %}

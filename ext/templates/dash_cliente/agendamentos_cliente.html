@@ -53,15 +53,24 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="form-group">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Cabeleleiro</label>
                   <select class="form-control select2" style="width: 100%; " name="cabeleleiro">
-                    <option selected="selected">Paula barros</option>
-                    <option>Jocasta Sousa</option>
-                    <option>Daiane Oliveira</option>
+                    <option value="0" selected="selected"> - </option>
+                    <option value="1">Guilherme colab</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Tratamento</label>
+                  <select class="form-control select2" style="width: 100%; " name="tratamentos">
+                    <option selected="selected"> - </option>
+                    <option value="1">Cortes Simples</option>
+                    <option value="2">Corte com hidratação</option>
+                    <option value="3">Hidratação</option>
+                    <option value="4">Corte com descoloração</option>
                   </select>
                 </div>
               </div>
@@ -70,7 +79,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
           </form>
         </div>

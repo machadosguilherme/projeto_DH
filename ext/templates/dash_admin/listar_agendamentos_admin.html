@@ -1,0 +1,73 @@
+{% extends "dash_admin/base_dash_admin.html" %}
+{% block content %}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <form action="" method="POST">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Listar Agendamentos</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Data agendamento</th>
+                                        <th>Cabeleleiro</th>
+                                        <th>Editar</th>
+                                        <th>Confirmado</th>
+                                        <th>Realizado</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for x in lista_agendamentos %}
+                                    <tr>
+                                        <td>{{x.nome}}</td>
+                                        <td>{{x.email}}</td>
+                                        <td>{{x.fone}}</td>
+                                        <td>{{x.data_agendamento}}</td> 
+                                        <td>{{x.colaborador}}</td> 
+
+                                        <td>
+                                            <a href="{{url_for('agendamento_editar', id=x.id)}}" class="nav-link">
+                                            <i class="nav-icon"></i>
+                                            <p>Editar</p>
+                                            </a>
+                                        </td>
+
+                                        {% if x.in_confimado == 1 %}
+                                        <td><input type="checkbox" id="checkboxPrimary1" name="confirmado" checked></td>
+                                        {%else%}
+                                        <td><input type="checkbox" id="checkboxPrimary1" name="confirmado"></td>
+                                        {%endif%}
+                            
+                                        {% if x.in_realizado == 1 %}
+                                        <td><input type="checkbox" id="checkboxPrimary1" name="realizado" checked></td>
+                                        {%else%}
+                                        <td><input type="checkbox" id="checkboxPrimary1" name="realizado"></td>
+                                        {%endif%}
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer clearfix">
+                            <b>Valor total:{{valor_total}} </b>
+                        </divc>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+</section>
+
+{% endblock content %}

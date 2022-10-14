@@ -1,51 +1,59 @@
 {% extends "dash_cliente/base_dash_cliente.html" %}
 {% block content %}
-<div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Lista agendamentos</h3>
-
-          <div class="card-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-default">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <form action="" method="POST">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Listar Agendamentos</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Data agendamento</th>
+                                        <th>Cabeleleiro</th>
+                                        <th>Confirmado</th>
+                                        <th>Realizado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for x in lista_agendamentos %}
+                                    <tr>
+  
+                                      <td>{{x.nome}}</td>
+                                      <td>{{x.email}}</td>
+                                      <td>{{x.fone}}</td>
+                                      <td>{{x.data_agendamento}}</td> 
+                                      <td>{{x.colaborador}}</td> 
+  
+                                      {% if x.in_confimado == 1 %}
+                                      <td><input type="checkbox" id="checkboxPrimary1" name="confirmado" checked></td>
+                                      {%else%}
+                                      <td><input type="checkbox" id="checkboxPrimary1" name="confirmado" disabled></td>
+                                      {%endif%}
+                          
+                                      {% if x.in_realizado == 1 %}
+                                      <td><input type="checkbox" id="checkboxPrimary1" name="realizado" checked></td>
+                                      {%else%}
+                                      <td><input type="checkbox" id="checkboxPrimary1" name="realizado" disabled></td>
+                                      {%endif%}
+                                      
+                                      {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
-          <table class="table table-hover text-nowrap">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Data agendamento</th>
-                <th>Cabeleleiro</th>
-              </tr>
-            </thead>
-            <tbody>
-                {% for x in lista_agendamentos %}
-              <tr>
-                <td>{{x.nome}}</td>
-                <td>{{x.email}}</td>
-                <td>{{x.fone}}</td>
-                <td>{{x.data_agendamento}}</td>
-                <td>{{x.colaborador}}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-    </div>
   </div>
+  </section>
 {% endblock content %}

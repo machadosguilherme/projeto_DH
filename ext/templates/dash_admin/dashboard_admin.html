@@ -1,1 +1,99 @@
 {%extends 'dash_admin/base_dash_admin.html'%}
+{%block content%}
+<div class="row">
+  <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          <h3>{{ agendamentos }}</h3>
+
+          <p>Agendamentos</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+          Mais informações <i class="fas fa-arrow-circle-right"></i>
+        </a>
+        <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+      </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box bg-danger">
+      <div class="inner">
+        <h3>{{usuarios}}</h3>
+
+        <p>Usuarios Cadastrados</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-chart-pie"></i>
+      </div>
+      <a href="#" class="small-box-footer">
+        Mais informações <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="card card-danger">
+    <div class="card-header">
+      <h3 class="card-title">Donut Chart</h3>
+
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+    </div>
+    <!-- /.card-body -->
+  </div>
+</div>
+{%endblock%}
+{%block script%}
+<script>
+  $(function () {
+    /* ChartJS
+    * -------
+    * Here we will create a few charts using ChartJS
+    */
+    
+    //--------------
+    //- AREA CHART -
+    //--------------
+    
+    // Get context with jQuery - using jQuery's .get() method.
+   //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    var donutData        = {
+      labels: [
+          'Chrome',
+          'IE',
+          'FireFox',
+          'Safari',
+          'Opera',
+          'Navigator',
+      ],
+      datasets: [
+        {
+          data: [700,500,400,600,300,100],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        }
+      ]
+    }
+    var donutOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+  })
+</script>
+{%endblock%}

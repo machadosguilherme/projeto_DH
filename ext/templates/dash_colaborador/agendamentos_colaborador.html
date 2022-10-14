@@ -60,23 +60,45 @@
                 <div class="form-group">
                   <label>Cabeleleiro</label>
                   <select value="{{x.colaborador}}" class="form-control select2" style="width: 100%; " name="cabeleleiro">
-                    <option selected="selected">Paula barros</option>
-                    <option>Jocasta Sousa</option>
-                    <option>Daiane Oliveira</option>
+                    <option value="0" selected="selected"> - </option>
+                    <option value="1">Guilherme colab</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Tratamento</label>
+                  <select class="form-control select2" style="width: 100%; " name="tratamentos">
+                    <option selected="selected"> - </option>
+                    <option value="1">Cortes Simples</option>
+                    <option value="2">Corte com hidratação</option>
+                    <option value="3">Hidratação</option>
+                    <option value="4">Corte com descoloração</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Produtos</label>
+                  <select class="form-control select2" style="width: 100%; " name="produtos">
+                    <option selected="selected"> - </option>
+                    <option value="1">Shampoo</option>
+                    <option value="2">Condicionador</option>
+                    <option value="3">Creme para pentear</option>
                   </select>
                 </div>
               </div>
               <div class="form-group clearfix">
                 {%if x.in_confirmar == 0 or x.in_confirmar%}
                 <div class="icheck-primary d-inline">
-                  <input type="checkbox" id="checkboxPrimary1" name="confirmado">
+                  <input type="checkbox" id="checkboxPrimary1" name="confirmado" >
                   <label for="checkboxPrimary1">
                     Agendamento Confirmado
                   </label>
                 </div>
                 {%else%}
                 <div class="icheck-primary d-inline">
-                  <input type="checkbox" id="checkboxPrimary1" name="confirmado" checked>
+                  <input type="checkbox" id="checkboxPrimary1" name="confirmado" checked >
                   <label for="checkboxPrimary1">
                     Agendamento Confirmado
                   </label>
@@ -88,7 +110,7 @@
           <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
             <div class="card-footer">
               <a type="button" href="{{url_for('agendamento_finalizado', id=x.id)}}" class="btn btn-block btn-outline-success">Realizado</a>
