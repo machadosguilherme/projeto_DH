@@ -24,7 +24,9 @@
                                         <th>Editar</th>
                                         <th>Confirmado</th>
                                         <th>Realizado</th>
-                                        <th>Valor</th>
+                                        <th>Valor tratamento</th>
+                                        <th>Valor produto</th>
+                                        <th>Valor total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,7 +56,21 @@
                                         {%else%}
                                         <td><input type="checkbox" id="checkboxPrimary1" name="realizado"></td>
                                         {%endif%}
-                                        
+                                        {% if x.valor_tratamento %}
+                                        <td>{{x.valor_tratamento}}</td>
+                                        {%else%}
+                                        <td>0</td>
+                                        {%endif%}
+                                        {% if x.valor_produto %}
+                                        <td>{{x.valor_produto}}</td>
+                                        {%else%}
+                                        <td>0</td>
+                                        {%endif%}
+                                        {% if x.valor_produto and x.valor_tratamento %}
+                                        <td>{{x.valor_produto + x.valor_tratamento}}</td>
+                                        {%else%}
+                                        <td>0</td>
+                                        {%endif%}
                                     </tr>
                                     {% endfor %}
                                 </tbody>

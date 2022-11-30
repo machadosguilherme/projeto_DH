@@ -12,7 +12,7 @@
         <div class="icon">
           <i class="ion ion-bag"></i>
         </div>
-        <a href="#" class="small-box-footer">
+        <a href="{{url_for('lista_agendamentos')}}" class="small-box-footer">
           Mais informações <i class="fas fa-arrow-circle-right"></i>
         </a>
         <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
@@ -27,15 +27,47 @@
         <p>Usuarios Cadastrados</p>
       </div>
       <div class="icon">
+        <i class="ion ion-person-add"></i>
+      </div>
+      <a href="{{url_for('lista_usuarios')}}" class="small-box-footer">
+        Mais informações <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box bg-success">
+      <div class="inner">
+        <h3>{{produtos}}</h3>
+
+        <p>Produtos Cadastrados</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-stats-bars"></i>
+      </div>
+      <a href="{{url_for('lista_usuarios')}}" class="small-box-footer">
+        Mais informações <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box bg-warning">
+      <div class="inner">
+        <h3>{{tratamentos}}</h3>
+
+        <p>Tratamentos Cadastrados</p>
+      </div>
+      <div class="icon">
         <i class="fas fa-chart-pie"></i>
       </div>
-      <a href="#" class="small-box-footer">
+      <a href="{{url_for('lista_usuarios')}}" class="small-box-footer">
         Mais informações <i class="fas fa-arrow-circle-right"></i>
       </a>
     </div>
   </div>
 </div>
-<div class="row">
+<div class="col-6">
   <div class="card card-danger">
     <div class="card-header">
       <h3 class="card-title">Donut Chart</h3>
@@ -58,7 +90,6 @@
 {%endblock%}
 {%block script%}
 <script>
-  $(function () {
     /* ChartJS
     * -------
     * Here we will create a few charts using ChartJS
@@ -70,23 +101,21 @@
     
     // Get context with jQuery - using jQuery's .get() method.
    //-------------
+    //-------------
     //- DONUT CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
       labels: [
-          'Chrome',
-          'IE',
-          'FireFox',
-          'Safari',
-          'Opera',
-          'Navigator',
+          'Agendamento',
+          'Confirmado',
+          'realizados',
       ],
       datasets: [
         {
-          data: [700,500,400,600,300,100],
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          data: [7,5,4],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12'],
         }
       ]
     }
@@ -94,6 +123,30 @@
       maintainAspectRatio : false,
       responsive : true,
     }
-  })
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions
+    })
+
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieData        = donutData;
+    var pieOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    })
 </script>
 {%endblock%}

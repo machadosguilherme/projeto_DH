@@ -6,6 +6,8 @@ from flask import render_template, request, redirect, url_for, flash, session
 from flask_login import UserMixin, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
 
 
 def init_app(app):
@@ -16,8 +18,8 @@ def init_app(app):
         "MAIL_PORT": 587,
         "MAIL_USE_TLS": True,
         "MAIL_DEBUG": True,
-        "MAIL_USERNAME": "valentina.haag@ethereal.email",
-        "MAIL_PASSWORD": "9CjDtNuNNETUXZrqWd",
+        "MAIL_USERNAME": "katelyn.lubowitz1@ethereal.email",
+        "MAIL_PASSWORD": "AHRpb2F4vZ5vZ1VUTE",
         "MAIL_DEFAULT_SENDER": "Espaço PB <espacopb@gmail.com.br>",
     }
     app.config.update(config)
@@ -115,11 +117,16 @@ def init_app(app):
         usuario = Usuario.query.filter_by(id = id).first()
         agendamentos = Agendamento.query.filter_by().count()
         novos_usuarios = Usuario.query.filter_by().count()
+        produtos = Tratamentos.query.count()
+        tratamentos = Produtos.query.count()
+        
         if usuario.in_admin == 1:
             return render_template('dash_admin/dashboard_admin.html',
                            novos_usuarios=novos_usuarios,
                            agendamentos=agendamentos,
-                           usuarios=novos_usuarios)
+                           usuarios=novos_usuarios,
+                           tratamentos=tratamentos,
+                           produtos=produtos)
         else:
             return BAD_REQUEST
  
@@ -148,6 +155,11 @@ def init_app(app):
             agendamento.colaborador = request.values.get('cabeleleiro')
             agendamento.data_registro = datetime.now()
             agendamento.cd_tratamento = request.values.get('tratamentos')
+            
+            info_tratamento = Tratamentos.query.filter_by(id=2).all()
+            agendamento.valor_tratamento = info_tratamento[0].valor
+            agendamento.valor_produto = 0
+            
             
             db.session.add(agendamento)
             db.session.commit()
@@ -189,7 +201,7 @@ def init_app(app):
             db.session.commit()
             usuario = Usuario.query.filter_by(in_colaborador=1).first()
             usuario_admin = Usuario.query.filter_by(in_admin=1).first()
-            sendmail(assunto='Agendamento Confirmado', email=agendamento.email, body=f'Olá, Seu agendamento para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento} foi Confirmado. \n o Procedimento será realizado pelo profissional: {agendamento.colaborador.nome}')
+            sendmail(assunto='Agendamento Confirmado', email=agendamento.email, body=f'Olá, Seu agendamento para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento} foi Confirmado. \n o Procedimento será realizado pelo profissional: {usuario.nome}')
             sendmail(assunto='Agendamento Confirmado', email=usuario_admin.email, body=f'Olá, Foi confirmado o agendamento com o cliente {agendamento.nome} para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento}. \n Após o atendimento finalize o agendamento,')
             sendmail(assunto='Agendamento Confirmado', email=usuario.email, body=f'Olá, Foi confirmado o agendamento com o cliente {agendamento.nome} para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento}. \n Após o atendimento finalize o agendamento,')
             
@@ -210,7 +222,7 @@ def init_app(app):
         id_usuario = session['usuario']
         usuario = Usuario.query.filter_by(in_colaborador=1).first()
         usuario_admin = Usuario.query.filter_by(in_admin=1).first()
-        sendmail(assunto='Agendamento Realizado', email=agendamento.email, body=f'Olá, Seu agendamento para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento} foi Realizado. \n o Processidimento foi realizado pelo profissional: {agendamento.colaborador.nome}')
+        sendmail(assunto='Agendamento Realizado', email=agendamento.email, body=f'Olá, Seu agendamento para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento} foi Realizado. \n o Processidimento foi realizado pelo profissional: {usuario.nome}')
         sendmail(assunto='Agendamento Realizado', email=usuario.email, body=f'Olá, O seu atendimento com o cliente {agendamento.nome} para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento} foi realizado. \n Obrigado!,')
         sendmail(assunto='Agendamento Realizado', email=usuario_admin.email, body=f'Olá, O atendimento com o cliente {agendamento.nome} para o dia: {agendamento.data_agendamento}, e horario: {agendamento.horario_agendamento}foi realizado, pelo profissional {usuario.nome}')
         return redirect(url_for('dash_colaborador', id=id_usuario))
@@ -333,3 +345,47 @@ def init_app(app):
             )
         mail.send(msg)
         return 'email enviado'
+
+
+    @app.route('/relatorio_gerencial_admin', methods=['GET'])
+    @login_required
+    def rel_ger_admin():
+        if request.method == 'GET':
+            agendamento = Agendamento.query.all()
+            print(agendamento)
+            wb = Workbook()
+
+            dest_filename = 'rel_geral_admin.xlsx'
+
+            ws1 = wb.active
+            ws1.title = "Agendamentos"
+
+            ws1.append(['Nome', 'Email', 'Data Agendamento', 'Valor Produto', 'Valor Tratamento'])
+            
+            for x in agendamento:
+                print(x.nome)
+                ws1.append([x.nome, x.email, x.data_agendamento, x.valor_produto, x.valor_tratamento])
+
+            wb.save(filename = dest_filename)
+        return ''
+    
+    @app.route('/relatorio_gerencial_admin_por_colab', methods=['GET'])
+    @login_required
+    def relatorio_gerencial_admin_por_colab():
+        if request.method == 'GET':
+            agendamento = Agendamento.query.all()
+            print(agendamento)
+            wb = Workbook()
+            dest_filename = 'relatorio_gerencial_admin_por_colab.xlsx'
+            ws1 = wb.active
+            ws1.title = "Realizados_por_colab"
+            ws1.append(['Nome','realizado', 'Data Agendamento', 'Valor venda Produto', 'Valor venda Tratamento'])
+            
+            for x in agendamento:
+                print(x.nome)
+                colab = Usuario.query.filter_by(id=x.colaborador).first()
+                produtos = Produtos.query.filter_by(id = x.cd_produto).all()
+                tratamentos = Tratamentos.query.filter_by(id = x.cd_tratamento).all()
+                ws1.append([colab.nome, ('Sim' if x.in_realizado == 1 else 'Não'), x.data_agendamento, (produtos[0].valor * (int(produtos[0].porcentagem) / 100) if produtos[0].valor else 0), (tratamentos[0].valor * (int(tratamentos[0].porcentagem) / 100) if tratamentos[0].valor else 0)])
+            wb.save(filename = dest_filename)
+        return ''
