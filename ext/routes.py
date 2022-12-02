@@ -1,4 +1,6 @@
 from datetime import datetime
+from io import BytesIO
+from flask.helpers import make_response
 from http.client import BAD_REQUEST
 from .model import Tratamentos, Usuario, Agendamento, Produtos
 from ext import login_maneger, db
@@ -18,13 +20,29 @@ def init_app(app):
         "MAIL_PORT": 587,
         "MAIL_USE_TLS": True,
         "MAIL_DEBUG": True,
-        "MAIL_USERNAME": "katelyn.lubowitz1@ethereal.email",
-        "MAIL_PASSWORD": "AHRpb2F4vZ5vZ1VUTE",
+        "MAIL_USERNAME": "damian.ritchie@ethereal.email",
+        "MAIL_PASSWORD": "GBaaqQgQ3gvMV16tMr",
         "MAIL_DEFAULT_SENDER": "Espaço PB <espacopb@gmail.com.br>",
     }
     app.config.update(config)
     mail = Mail(app)
-    
+    def export_bytes(self) -> bytes:
+        """Exporta excel em bytes
+
+        Returns:
+            [bytes]: Arquivo serializado
+        """
+        virtual_workbook = BytesIO()
+        self.save(virtual_workbook)
+        return virtual_workbook.getvalue()
+
+    def send_file( file: bytes, as_attachment: bool, filename: str, content_type: str = "application/octet-stream"):
+        disposition = "attachment" if as_attachment else "inline"
+        response = make_response(file)
+        response.headers["Content-Type"] = content_type
+        response.headers["Content-Disposition"] = f"{disposition}; filename={filename}"
+        return response
+
     @app.before_first_request
     def create_db():
         db.create_all()
@@ -352,7 +370,6 @@ def init_app(app):
     def rel_ger_admin():
         if request.method == 'GET':
             agendamento = Agendamento.query.all()
-            print(agendamento)
             wb = Workbook()
 
             dest_filename = 'rel_geral_admin.xlsx'
@@ -363,18 +380,19 @@ def init_app(app):
             ws1.append(['Nome', 'Email', 'Data Agendamento', 'Valor Produto', 'Valor Tratamento'])
             
             for x in agendamento:
-                print(x.nome)
                 ws1.append([x.nome, x.email, x.data_agendamento, x.valor_produto, x.valor_tratamento])
 
             wb.save(filename = dest_filename)
-        return ''
+        return send_file(
+                export_bytes(wb),
+                as_attachment=True,
+                filename="rel_geral_admin.xlsx")
     
     @app.route('/relatorio_gerencial_admin_por_colab', methods=['GET'])
     @login_required
     def relatorio_gerencial_admin_por_colab():
         if request.method == 'GET':
             agendamento = Agendamento.query.all()
-            print(agendamento)
             wb = Workbook()
             dest_filename = 'relatorio_gerencial_admin_por_colab.xlsx'
             ws1 = wb.active
@@ -383,9 +401,53 @@ def init_app(app):
             
             for x in agendamento:
                 print(x.nome)
-                colab = Usuario.query.filter_by(id=x.colaborador).first()
+                colab = Usuario.query.filter_by(in_colaborador=1).first()
                 produtos = Produtos.query.filter_by(id = x.cd_produto).all()
                 tratamentos = Tratamentos.query.filter_by(id = x.cd_tratamento).all()
-                ws1.append([colab.nome, ('Sim' if x.in_realizado == 1 else 'Não'), x.data_agendamento, (produtos[0].valor * (int(produtos[0].porcentagem) / 100) if produtos[0].valor else 0), (tratamentos[0].valor * (int(tratamentos[0].porcentagem) / 100) if tratamentos[0].valor else 0)])
+                print(produtos)
+                ws1.append([colab.nome, ('Sim' if x.in_realizado == 1 else 'Não'), x.data_agendamento, (produtos[0].valor * (int(produtos[0].porcentagem) / 100) if produtos else 0), (tratamentos[0].valor * (int(tratamentos[0].porcentagem) / 100) if tratamentos[0].valor else 0)])
             wb.save(filename = dest_filename)
-        return ''
+            
+        return send_file(
+                export_bytes(wb),
+                as_attachment=True,
+                filename="relatorio_gerencial_admin_por_colab.xlsx")
+
+    @app.route('/relatorio_produtos', methods=['GET'])
+    @login_required
+    def relatorio_produtos():
+        if request.method == 'GET':
+            produtos = Produtos.query.all()
+            wb = Workbook()
+            dest_filename = 'produtos.xlsx'
+            ws1 = wb.active
+            ws1.title = "Produtos"
+            ws1.append(['Nome','Tipo', 'Valor', 'Porcentagem', 'Data criação'])
+            for x in produtos:
+                ws1.append([x.nome, x.tipo, x.valor, x.porcentagem, x.data_criacao])
+            wb.save(filename = dest_filename)
+
+        return send_file(
+                export_bytes(wb),
+                as_attachment=True,
+                filename="produtos.xlsx")
+
+    @app.route('/relatorio_tratamentos', methods=['GET'])
+    @login_required
+    def relatorio_tratamentos():
+        if request.method == 'GET':
+            tratamentos = Tratamentos.query.all()
+            wb = Workbook()
+            dest_filename = 'tratamentos.xlsx'
+            ws1 = wb.active
+            ws1.title = "Tratamentos"
+            ws1.append(['Nome','Tipo', 'Valor', 'Porcentagem', 'Data criação'])
+            for x in tratamentos:
+                ws1.append([x.nome, x.tipo, x.valor, x.porcentagem, x.data_criacao])
+            wb.save(filename = dest_filename)
+
+        return send_file(
+                export_bytes(wb),
+                as_attachment=True,
+                filename="tratamentos.xlsx")
+    
